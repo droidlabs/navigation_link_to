@@ -23,7 +23,10 @@ module NavigationLinkTo
       url = url_for(options)
       controller = html_options[:controller]
       wrapper = html_options[:wrapper].nil? ? 'li' : html_options[:wrapper]
-      if (controller && controller?(controller)) || current_page?(url) || html_options[:active]
+      is_current_controller = controller && controller?(controller)
+      is_current_page = current_page?(url) && !html_options.has_key?(:active)
+      is_force_active = html_options[:active]
+      if is_current_controller || is_current_page || is_force_active
         html_options[:class] = [html_options[:class], 'active'].compact.join(' ')
         html_options[:wrapper_class] = [html_options[:wrapper_class], 'active'].compact.join(' ')
       end
